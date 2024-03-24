@@ -8,7 +8,7 @@ extends Node
 @onready var health_bar = $CanvasLayer/HUD/HealthBar
 @onready var message_box: MessageBox = $CanvasLayer/HUD/MessageBox
 
-const player_scene = preload("res://player.tscn")
+const PLAYER_SCENE = preload("res://player.tscn")
 var player_data = {}
 
 const PORT = 7777
@@ -44,7 +44,7 @@ func _on_join_button_pressed():
 
 
 func add_player(peer_id):
-	var player = player_scene.instantiate()
+	var player = PLAYER_SCENE.instantiate()
 	player.name = str(peer_id)
 	add_child(player)
 	
@@ -56,11 +56,11 @@ func add_player(peer_id):
 	
 	player_data[peer_id] = PlayerData.new(player, player_color)
 	
+	# connect health bar for server player
 	if player.is_multiplayer_authority():
 		player.health_changed.connect(update_health_bar)
-	
-	# sends whenever the server adds a player that isn't the server player
-	if not player.is_multiplayer_authority():
+	else:
+	# sends whenever the server adds a player that isn't the server player		
 		message_box.add_text.rpc('Player ' + player.name + ' has joined!')
 
 

@@ -1,16 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://eiursmsmewhg"]
+[gd_scene load_steps=2 format=3 uid="uid://eiursmsmewhg"]
 
 [ext_resource type="PackedScene" uid="uid://6q2056c0vcxk" path="res://weapons/pistol/pistol.blend" id="1_6i7dt"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_k5plc"]
-size = Vector3(0.1, 0.188342, 0.299048)
-
 [node name="Pistol" instance=ExtResource("1_6i7dt")]
 transform = Transform3D(1.7, 0, 0, 0, 1.7, 0, 0, 0, 1.7, 0, 0, 0)
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Pistol" index="0"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Pistol/StaticBody3D" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00516968, -0.0921753)
-shape = SubResource("BoxShape3D_k5plc")
-disabled = true

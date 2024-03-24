@@ -5,11 +5,14 @@ class_name Player
 signal health_changed(new_health)
 
 
+const PISTOL_SCENE = preload("res://weapons/pistol/pistol_obj.tscn")
+
 @onready var camera = $Camera3D
 @onready var animation_player = $AnimationPlayer
 @onready var muzzle_flash = $Camera3D/Pistol/MuzzleFlash
 @onready var raycast = $Camera3D/RayCast3D
 @onready var mesh_instance_3d = $MeshInstance3D
+@onready var pistol = $Camera3D/Pistol
 
 var health = 3
 
@@ -97,10 +100,21 @@ func receive_damage():
 	health -= 1
 	
 	if health <= 0:
+		die.rpc()
+		
 		health = 3
 		position = Vector3.ZERO
 	
 	health_changed.emit(health)
+
+
+@rpc("any_peer", "call_local")
+func die():
+	var dropped_pistol = PISTOL_SCENE.instantiate()
+	dropped_pistol.position = pistol.global_position
+	dropped_pistol.rotation = pistol.global_rotation
+	dropped_pistol.linear_velocity = velocity
+	add_sibling(dropped_pistol)
 
 
 @rpc("any_peer", "call_local")
