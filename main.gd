@@ -12,6 +12,8 @@ extends Node
 @onready var message_box: MessageBox = $CanvasLayer/HUD/MessageBox
 @onready var hit_marker = $CanvasLayer/HUD/HitMarker
 
+@onready var scoreboard = $CanvasLayer/Scoreboard
+
 const PLAYER_SCENE = preload("res://player/player.tscn")
 var player_data = {}
 
@@ -58,10 +60,13 @@ func add_player(peer_id):
 	
 	# when a player joins, call rpcs on the instances of existing players so 
 	# the new player's version of their instances matches
-	for existing_player in player_data.values():
+	for existing_player_id in player_data:
+		var existing_player = player_data[existing_player_id]
 		var existing_instance = existing_player.instance
 		existing_instance.set_color.rpc_id(peer_id, existing_player.color)
 		existing_instance.set_player_name.rpc_id(peer_id, existing_player.player_name)
+		scoreboard.add_player.rpc_id(peer_id, existing_player_id, existing_player.player_name)
+		scoreboard.update_player_kda.rpc_id(peer_id, existing_player_id, existing_player.kills, existing_player.deaths)
 	
 	player_data[peer_id] = PlayerData.new(player, "Bozo the Clown", player_color)
 	player.killed.connect(_on_player_killed)
@@ -78,8 +83,10 @@ func remove_player(peer_id):
 	if player:
 		player.queue_free()
 		message_box.add_text.rpc('Player ' + player_data[peer_id].player_name + ' has disconnected.')
+		scoreboard.remove_player.rpc(peer_id)
 
 
+# This should probably be moved 
 func update_health_bar(health_value):
 	health_bar.value = health_value
 
@@ -96,6 +103,7 @@ func update_player_data(peer_id: int, new_name: String):
 	pd.instance.set_player_name.rpc(pd.player_name)
 	
 	message_box.add_text.rpc('Player ' + pd.player_name + ' has joined!')
+	scoreboard.add_player.rpc(peer_id, pd.player_name)
 
 
 func _on_multiplayer_spawner_spawned(node):
@@ -117,3 +125,6 @@ func _on_player_killed(killed_id: int, killer_id: int):
 	message_box.add_text.rpc(killer.player_name + ' killed ' + killed.player_name + '!')
 	killed.deaths += 1
 	killer.kills += 1
+	
+	scoreboard.update_player_kda.rpc(killed_id, killed.kills, killed.deaths)
+	scoreboard.update_player_kda.rpc(killer_id, killer.kills, killer.deaths)

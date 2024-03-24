@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://nkv6583poru4"]
+[gd_scene load_steps=12 format=3 uid="uid://nkv6583poru4"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_6po7t"]
 [ext_resource type="PackedScene" uid="uid://yhhdmpnnwnxr" path="res://environment.tscn" id="1_qw3on"]
 [ext_resource type="Texture2D" uid="uid://c3hsmir1glq0d" path="res://addons/kenney_particle_pack/circle_05.png" id="3_hr244"]
 [ext_resource type="PackedScene" uid="uid://c30d472gdop0j" path="res://ui/hit_marker/hit_marker.tscn" id="4_fi2uq"]
 [ext_resource type="PackedScene" uid="uid://v51yww03ph3p" path="res://ui/message_box/message_box.tscn" id="4_tbemt"]
+[ext_resource type="PackedScene" uid="uid://c3s0h36vvt5uy" path="res://ui/scoreboard/scoreboard.tscn" id="6_foaxp"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_80s7a"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -169,6 +170,9 @@ layout_mode = 1
 
 [node name="MessageBox" parent="CanvasLayer/HUD" instance=ExtResource("4_tbemt")]
 layout_mode = 1
+
+[node name="Scoreboard" parent="CanvasLayer" instance=ExtResource("6_foaxp")]
+visible = false
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://player/player.tscn")
