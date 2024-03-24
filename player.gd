@@ -9,6 +9,7 @@ signal health_changed(new_health)
 @onready var animation_player = $AnimationPlayer
 @onready var muzzle_flash = $Camera3D/Pistol/MuzzleFlash
 @onready var raycast = $Camera3D/RayCast3D
+@onready var mesh_instance_3d = $MeshInstance3D
 
 var health = 3
 
@@ -100,6 +101,13 @@ func receive_damage():
 		position = Vector3.ZERO
 	
 	health_changed.emit(health)
+
+
+@rpc("any_peer", "call_local")
+func set_color(new_color: Color):
+	var material = StandardMaterial3D.new()
+	material.albedo_color = new_color
+	mesh_instance_3d.material_override = material
 
 
 func _on_animation_player_animation_finished(anim_name):
