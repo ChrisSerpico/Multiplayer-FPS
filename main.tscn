@@ -79,6 +79,14 @@ vertical_alignment = 1
 [node name="HSeparator2" type="HSeparator" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="DisplayNameEntry" type="LineEdit" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Enter display name"
+alignment = 1
+
+[node name="HSeparator3" type="HSeparator" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
 [node name="HostButton" type="Button" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Host"

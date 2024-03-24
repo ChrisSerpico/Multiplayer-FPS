@@ -13,6 +13,7 @@ const PISTOL_SCENE = preload("res://weapons/pistol/pistol_obj.tscn")
 @onready var raycast = $Camera3D/RayCast3D
 @onready var mesh_instance_3d = $MeshInstance3D
 @onready var pistol = $Camera3D/Pistol
+@onready var name_label = $Label3D
 
 var health = 3
 
@@ -122,6 +123,11 @@ func set_color(new_color: Color):
 	var material = StandardMaterial3D.new()
 	material.albedo_color = new_color
 	mesh_instance_3d.material_override = material
+
+
+@rpc("any_peer", "call_local")
+func set_player_name(name: String):
+	name_label.text = name
 
 
 func _on_animation_player_animation_finished(anim_name):
