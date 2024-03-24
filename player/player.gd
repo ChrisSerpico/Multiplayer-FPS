@@ -17,6 +17,7 @@ const DROPPED_PISTOL_SCENE = preload("res://weapons/pistol/pistol_obj.tscn")
 @onready var pistol: Weapon = $Camera3D/Pistol
 @onready var name_label = $Label3D
 @onready var hit_sound = $HitSound
+@onready var footstep_sound = $FootstepSound
 
 var health = 3
 
@@ -92,8 +93,10 @@ func _physics_process(delta):
 		pass
 	elif input_dir != Vector2.ZERO and is_on_floor():
 		animation_player.play("move")
+		footstep_sound.walk()
 	else:
 		animation_player.play("idle")
+		footstep_sound.stop_walking()
 
 	move_and_slide()
 

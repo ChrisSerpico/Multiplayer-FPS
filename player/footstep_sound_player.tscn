@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://x1f0w4nlle58"]
+
+[ext_resource type="AudioStream" uid="uid://c3habcpvaov0" path="res://player/Footsteps_Tile_Walk_06.wav" id="1_rt7ra"]
+[ext_resource type="AudioStream" uid="uid://cdlfssn8c8phx" path="res://player/Footsteps_Tile_Walk_07.wav" id="1_xqcml"]
+[ext_resource type="Script" path="res://player/footstep_sound_player.gd" id="2_qls3l"]
+[ext_resource type="AudioStream" uid="uid://d30552ca7fl5" path="res://player/Footsteps_Tile_Walk_08.wav" id="3_p4gjt"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_uvlhx"]
+random_pitch = 1.1
+streams_count = 3
+stream_0/stream = ExtResource("1_rt7ra")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("1_xqcml")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("3_p4gjt")
+stream_2/weight = 1.0
+
+[node name="FootstepSound" type="AudioStreamPlayer3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.150334, 0)
+stream = SubResource("AudioStreamRandomizer_uvlhx")
+volume_db = -10.0
+script = ExtResource("2_qls3l")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

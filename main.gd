@@ -12,7 +12,7 @@ extends Node
 @onready var message_box: MessageBox = $CanvasLayer/HUD/MessageBox
 @onready var hit_marker = $CanvasLayer/HUD/HitMarker
 
-const PLAYER_SCENE = preload("res://player.tscn")
+const PLAYER_SCENE = preload("res://player/player.tscn")
 var player_data = {}
 
 const DEFAULT_IP = "localhost"

@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://bhh6mxnugnafv"]
+[gd_scene load_steps=19 format=3 uid="uid://bhh6mxnugnafv"]
 
-[ext_resource type="Script" path="res://player.gd" id="1_hsvep"]
-[ext_resource type="PackedScene" uid="uid://eiursmsmewhg" path="res://weapons/pistol/pistol.tscn" id="2_1d5n2"]
-[ext_resource type="Texture2D" uid="uid://obpwonshyrdh" path="res://addons/kenney_particle_pack/star_06.png" id="3_js3fa"]
-[ext_resource type="AudioStream" uid="uid://bg4y26w2kd5w0" path="res://weapons/hit_sound.wav" id="4_w8mkj"]
+[ext_resource type="Script" path="res://player/player.gd" id="1_7bh54"]
+[ext_resource type="PackedScene" uid="uid://eiursmsmewhg" path="res://weapons/pistol/pistol.tscn" id="2_yk7sy"]
+[ext_resource type="Texture2D" uid="uid://obpwonshyrdh" path="res://addons/kenney_particle_pack/star_06.png" id="3_wmqjb"]
+[ext_resource type="AudioStream" uid="uid://bg4y26w2kd5w0" path="res://weapons/hit_sound.wav" id="4_58asu"]
+[ext_resource type="PackedScene" uid="uid://x1f0w4nlle58" path="res://player/footstep_sound_player.tscn" id="5_xq6ks"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_y23fa"]
 
@@ -27,7 +28,7 @@ transparency = 1
 shading_mode = 0
 vertex_color_use_as_albedo = true
 albedo_color = Color(0.997198, 1, 0.776148, 1)
-albedo_texture = ExtResource("3_js3fa")
+albedo_texture = ExtResource("3_wmqjb")
 billboard_mode = 3
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
@@ -160,7 +161,7 @@ properties/2/replication_mode = 1
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 2
-script = ExtResource("1_hsvep")
+script = ExtResource("1_7bh54")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -173,7 +174,7 @@ shape = SubResource("CapsuleShape3D_q0k1g")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.49995, 0)
 
-[node name="Pistol" parent="Camera3D" instance=ExtResource("2_1d5n2")]
+[node name="Pistol" parent="Camera3D" instance=ExtResource("2_yk7sy")]
 transform = Transform3D(1.7, 0, 0, 0, 1.7, 0, 0, 0, 1.7, 0.5, -0.25, -0.5)
 
 [node name="MuzzleFlash" type="GPUParticles3D" parent="Camera3D/Pistol"]
@@ -206,7 +207,10 @@ replication_config = SubResource("SceneReplicationConfig_ei8rd")
 
 [node name="HitSound" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45095, 0)
-stream = ExtResource("4_w8mkj")
+stream = ExtResource("4_58asu")
 volume_db = -45.0
+
+[node name="FootstepSound" parent="." instance=ExtResource("5_xq6ks")]
+volume_db = -10.0
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
