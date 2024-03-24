@@ -1,0 +1,63 @@
+[gd_scene load_steps=6 format=3 uid="uid://ced6a7muck7di"]
+
+[ext_resource type="Script" path="res://ui/message_box/message_box_label.gd" id="1_y506m"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_k3lb5"]
+font_size = 22
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_i71lk"]
+resource_name = "fade_out"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_k4bgm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xf0k0"]
+_data = {
+"RESET": SubResource("Animation_k4bgm"),
+"fade_out": SubResource("Animation_i71lk")
+}
+
+[node name="MessageBoxLabel" type="Label"]
+text = "testing text :)"
+label_settings = SubResource("LabelSettings_k3lb5")
+script = ExtResource("1_y506m")
+
+[node name="LabelFadeOutTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_xf0k0")
+}
+
+[connection signal="timeout" from="LabelFadeOutTimer" to="." method="_on_label_fade_out_timer_timeout"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
