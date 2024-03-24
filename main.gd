@@ -30,7 +30,6 @@ func _on_host_button_pressed():
 	multiplayer.multiplayer_peer = enet_peer
 	multiplayer.peer_disconnected.connect(remove_player)
 	
-	print(multiplayer.get_unique_id())
 	add_player(multiplayer.get_unique_id())
 
 
@@ -92,7 +91,7 @@ func update_player_data(peer_id: int, new_name: String):
 	
 	if new_name != "":
 		pd.player_name = new_name
-		pd.instance.set_player_name.rpc(new_name)
+	pd.instance.set_player_name.rpc(pd.player_name)
 	
 	message_box.add_text.rpc('Player ' + pd.player_name + ' has joined!')
 
