@@ -2,7 +2,7 @@ extends Node3D
 class_name Weapon
 
 
-const DUCK_AMOUNT = 5
+const DUCK_AMOUNT = 6
 
 
 @export var dropped_version_scene: PackedScene
