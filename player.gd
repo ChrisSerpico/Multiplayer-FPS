@@ -4,6 +4,7 @@ class_name Player
 
 signal health_changed(new_health)
 signal hit_shot()
+signal killed(player_id: int, killed_by_id: int)
 
 
 const PISTOL_SCENE = preload("res://weapons/pistol/pistol_obj.tscn")
@@ -57,7 +58,7 @@ func _unhandled_input(event):
 			
 			hit_sound.play()
 			hit_shot.emit()
-			hit_object.receive_damage.rpc_id(hit_object.get_multiplayer_authority())
+			hit_object.receive_damage.rpc_id(hit_object.get_multiplayer_authority(), multiplayer.get_unique_id())
 
 
 func _physics_process(delta):
@@ -101,11 +102,11 @@ func play_shoot_effects():
 
 
 @rpc("any_peer")
-func receive_damage():
+func receive_damage(damager_id: int):
 	health -= 1
 	
 	if health <= 0:
-		die.rpc()
+		die.rpc(damager_id)
 		
 		health = 3
 		position = Vector3.ZERO
@@ -114,7 +115,9 @@ func receive_damage():
 
 
 @rpc("any_peer", "call_local")
-func die():
+func die(killer_id: int):
+	killed.emit(str(name).to_int(), killer_id)
+	
 	var dropped_pistol = PISTOL_SCENE.instantiate()
 	dropped_pistol.position = pistol.global_position
 	dropped_pistol.rotation = pistol.global_rotation

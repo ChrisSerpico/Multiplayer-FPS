@@ -61,14 +61,13 @@ func add_player(peer_id):
 		existing_instance.set_player_name.rpc_id(peer_id, existing_player.player_name)
 	
 	player_data[peer_id] = PlayerData.new(player, "Bozo the Clown", player_color)
+	player.killed.connect(_on_player_killed)
 	
 	# setup for server player
 	if player.is_multiplayer_authority():
 		player.health_changed.connect(update_health_bar)
 		player.hit_shot.connect(hit_marker.play_hit)
-		
-		if display_name_entry.text != "":
-			update_player_data(1, display_name_entry.text)
+		update_player_data(1, display_name_entry.text)
 
 
 func remove_player(peer_id):
@@ -105,3 +104,13 @@ func _on_multiplayer_spawner_spawned(node):
 
 func _on_connected_to_server():
 	update_player_data.rpc_id(1, multiplayer.get_unique_id(), display_name_entry.text)
+
+
+@rpc("any_peer")
+func _on_player_killed(killed_id: int, killer_id: int):
+	var killed = player_data.get(killed_id)
+	var killer = player_data.get(killer_id)
+	
+	message_box.add_text.rpc(killer.player_name + ' killed ' + killed.player_name + '!')
+	killed.deaths += 1
+	killer.kills += 1

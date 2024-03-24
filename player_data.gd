@@ -6,6 +6,9 @@ var instance: Player
 var player_name: String
 var color: Color
 
+var kills: int
+var deaths: int
+
 
 func _init(init_instance: Player, name: String, init_color: Color):
 	instance = init_instance
