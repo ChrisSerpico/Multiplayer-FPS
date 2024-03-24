@@ -9,7 +9,7 @@ extends Node
 
 const player_scene = preload("res://player.tscn")
 
-const PORT = 9999
+const PORT = 7777
 var enet_peer = ENetMultiplayerPeer.new()
 
 
