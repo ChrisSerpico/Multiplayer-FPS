@@ -8,6 +8,7 @@ extends Node
 @onready var hud = $CanvasLayer/HUD
 @onready var health_bar = $CanvasLayer/HUD/HealthBar
 @onready var message_box: MessageBox = $CanvasLayer/HUD/MessageBox
+@onready var hit_marker = $CanvasLayer/HUD/HitMarker
 
 const PLAYER_SCENE = preload("res://player.tscn")
 var player_data = {}
@@ -65,6 +66,7 @@ func add_player(peer_id):
 	# setup for server player
 	if player.is_multiplayer_authority():
 		player.health_changed.connect(update_health_bar)
+		player.hit_shot.connect(hit_marker.play_hit)
 		
 		if display_name_entry.text != "":
 			update_player_data(1, display_name_entry.text)
@@ -99,6 +101,7 @@ func _on_multiplayer_spawner_spawned(node):
 	if node is Player:
 		if node.is_multiplayer_authority():
 			node.health_changed.connect(update_health_bar)
+			node.hit_shot.connect(hit_marker.play_hit)
 
 
 func _on_connected_to_server():

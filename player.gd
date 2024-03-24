@@ -3,6 +3,7 @@ class_name Player
 
 
 signal health_changed(new_health)
+signal hit_shot()
 
 
 const PISTOL_SCENE = preload("res://weapons/pistol/pistol_obj.tscn")
@@ -14,6 +15,7 @@ const PISTOL_SCENE = preload("res://weapons/pistol/pistol_obj.tscn")
 @onready var mesh_instance_3d = $MeshInstance3D
 @onready var pistol = $Camera3D/Pistol
 @onready var name_label = $Label3D
+@onready var hit_sound = $HitSound
 
 var health = 3
 
@@ -53,6 +55,8 @@ func _unhandled_input(event):
 			if not hit_object is Player:
 				return
 			
+			hit_sound.play()
+			hit_shot.emit()
 			hit_object.receive_damage.rpc_id(hit_object.get_multiplayer_authority())
 
 

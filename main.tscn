@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://nkv6583poru4"]
+[gd_scene load_steps=11 format=3 uid="uid://nkv6583poru4"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_6po7t"]
 [ext_resource type="PackedScene" uid="uid://yhhdmpnnwnxr" path="res://environment.tscn" id="1_qw3on"]
 [ext_resource type="Texture2D" uid="uid://c3hsmir1glq0d" path="res://addons/kenney_particle_pack/circle_05.png" id="3_hr244"]
+[ext_resource type="PackedScene" uid="uid://c30d472gdop0j" path="res://ui/hit_marker/hit_marker.tscn" id="4_fi2uq"]
 [ext_resource type="PackedScene" uid="uid://v51yww03ph3p" path="res://ui/message_box/message_box.tscn" id="4_tbemt"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_80s7a"]
@@ -129,7 +130,7 @@ max_value = 3.0
 value = 3.0
 show_percentage = false
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HUD"]
+[node name="Reticle" type="TextureRect" parent="CanvasLayer/HUD"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -145,6 +146,9 @@ grow_vertical = 2
 scale = Vector2(0.03, 0.03)
 texture = ExtResource("3_hr244")
 stretch_mode = 5
+
+[node name="HitMarker" parent="CanvasLayer/HUD" instance=ExtResource("4_fi2uq")]
+layout_mode = 1
 
 [node name="MessageBox" parent="CanvasLayer/HUD" instance=ExtResource("4_tbemt")]
 layout_mode = 1
