@@ -88,6 +88,14 @@ alignment = 1
 [node name="HSeparator3" type="HSeparator" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="HostPortEntry" type="SpinBox" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+min_value = 1024.0
+max_value = 65535.0
+value = 7777.0
+alignment = 1
+prefix = "Host Port:"
+
 [node name="HostButton" type="Button" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Host"
@@ -97,8 +105,16 @@ layout_mode = 2
 
 [node name="AddressEntry" type="LineEdit" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
-placeholder_text = "Enter IP address to join"
+placeholder_text = "IP Address"
 alignment = 1
+
+[node name="JoinPortEntry" type="SpinBox" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+min_value = 1024.0
+max_value = 65535.0
+value = 7777.0
+alignment = 1
+prefix = "Join Port:"
 
 [node name="JoinButton" type="Button" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2

@@ -3,7 +3,9 @@ extends Node
 
 @onready var main_menu = $CanvasLayer/MainMenu
 @onready var display_name_entry = $CanvasLayer/MainMenu/MarginContainer/VBoxContainer/DisplayNameEntry
+@onready var host_port_entry = $CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostPortEntry
 @onready var address_entry = $CanvasLayer/MainMenu/MarginContainer/VBoxContainer/AddressEntry
+@onready var join_port_entry = $CanvasLayer/MainMenu/MarginContainer/VBoxContainer/JoinPortEntry
 
 @onready var hud = $CanvasLayer/HUD
 @onready var health_bar = $CanvasLayer/HUD/HealthBar
@@ -13,7 +15,8 @@ extends Node
 const PLAYER_SCENE = preload("res://player.tscn")
 var player_data = {}
 
-const PORT = 7777
+const DEFAULT_IP = "localhost"
+const DEFAULT_PORT = 7777
 var enet_peer = ENetMultiplayerPeer.new()
 
 
@@ -26,7 +29,7 @@ func _on_host_button_pressed():
 	main_menu.hide()
 	hud.show()
 	
-	enet_peer.create_server(PORT)
+	enet_peer.create_server(host_port_entry.value)
 	multiplayer.multiplayer_peer = enet_peer
 	multiplayer.peer_disconnected.connect(remove_player)
 	
@@ -40,7 +43,7 @@ func _on_join_button_pressed():
 	if address_entry.text == "":
 		address_entry.text = "localhost" 
 	
-	enet_peer.create_client(address_entry.text, PORT)
+	enet_peer.create_client(address_entry.text, join_port_entry.value)
 	multiplayer.multiplayer_peer = enet_peer
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 
