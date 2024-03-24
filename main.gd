@@ -81,9 +81,10 @@ func add_player(peer_id):
 func remove_player(peer_id):
 	var player = get_node_or_null(str(peer_id))
 	if player:
-		player.queue_free()
 		message_box.add_text.rpc('Player ' + player_data[peer_id].player_name + ' has disconnected.')
 		scoreboard.remove_player.rpc(peer_id)
+		player_data.erase(peer_id)
+		player.queue_free()
 
 
 # This should probably be moved 
