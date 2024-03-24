@@ -4,6 +4,7 @@ extends AudioStreamPlayer3D
 var walking: bool = false
 
 
+@rpc("any_peer", "call_local")
 func walk():
 	if walking:
 		return
@@ -12,6 +13,7 @@ func walk():
 	walking = true
 
 
+@rpc("any_peer", "call_local")
 func stop_walking():
 	if not walking:
 		return

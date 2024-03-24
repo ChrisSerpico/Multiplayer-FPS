@@ -93,10 +93,10 @@ func _physics_process(delta):
 		pass
 	elif input_dir != Vector2.ZERO and is_on_floor():
 		animation_player.play("move")
-		footstep_sound.walk()
+		footstep_sound.walk.rpc()
 	else:
 		animation_player.play("idle")
-		footstep_sound.stop_walking()
+		footstep_sound.stop_walking.rpc()
 
 	move_and_slide()
 

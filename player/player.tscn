@@ -211,5 +211,6 @@ stream = ExtResource("4_58asu")
 volume_db = -45.0
 
 [node name="FootstepSound" parent="." instance=ExtResource("5_xq6ks")]
+doppler_tracking = 1
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
