@@ -60,4 +60,5 @@ shoot={
 
 [physics]
 
+common/physics_ticks_per_second=90
 3d/size/viewport_height=1080

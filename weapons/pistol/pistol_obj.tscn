@@ -103,7 +103,7 @@ shadow_mesh = SubResource("ArrayMesh_e3lhr")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rbwl8"]
 margin = 0.0
-size = Vector3(0.081, 0.193, 0.287)
+size = Vector3(0.081, 0.221529, 0.326165)
 
 [node name="Pistol" type="RigidBody3D"]
 collision_layer = 4
@@ -117,5 +117,5 @@ mesh = SubResource("ArrayMesh_p23cx")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1.7, 0, 0, 0, 1.7, 0, 0, 0, 1.7, 0, 0.0116608, -0.162271)
+transform = Transform3D(1.7, 0, 0, 0, 1.28893, -1.10845, 0, 1.10845, 1.28893, 0, 0.0644923, -0.0992391)
 shape = SubResource("BoxShape3D_rbwl8")
