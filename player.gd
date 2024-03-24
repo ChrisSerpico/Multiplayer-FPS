@@ -7,14 +7,14 @@ signal hit_shot()
 signal killed(player_id: int, killed_by_id: int)
 
 
-const PISTOL_SCENE = preload("res://weapons/pistol/pistol_obj.tscn")
+const DROPPED_PISTOL_SCENE = preload("res://weapons/pistol/pistol_obj.tscn")
 
 @onready var camera = $Camera3D
 @onready var animation_player = $AnimationPlayer
 @onready var muzzle_flash = $Camera3D/Pistol/MuzzleFlash
 @onready var raycast = $Camera3D/RayCast3D
 @onready var mesh_instance_3d = $MeshInstance3D
-@onready var pistol = $Camera3D/Pistol
+@onready var pistol: Weapon = $Camera3D/Pistol
 @onready var name_label = $Label3D
 @onready var hit_sound = $HitSound
 
@@ -49,16 +49,20 @@ func _unhandled_input(event):
 		camera.rotation.x = clamp(camera.rotation.x, -PI/2, PI/2)
 	
 	if Input.is_action_just_pressed("shoot") and animation_player.current_animation != "shoot":
+		var hit_player = false
 		play_shoot_effects.rpc()
+		
 		if raycast.is_colliding():
 			var hit_object = raycast.get_collider()
 			
-			if not hit_object is Player:
-				return
-			
-			hit_sound.play()
-			hit_shot.emit()
-			hit_object.receive_damage.rpc_id(hit_object.get_multiplayer_authority(), multiplayer.get_unique_id())
+			if hit_object is Player:
+				hit_player = true
+				hit_sound.play()
+				hit_shot.emit()
+				hit_object.receive_damage.rpc_id(hit_object.get_multiplayer_authority(), multiplayer.get_unique_id())
+		
+		pistol.play_fire_sound(hit_player)
+		pistol.play_fire_sound.rpc()
 
 
 func _physics_process(delta):
@@ -117,12 +121,7 @@ func receive_damage(damager_id: int):
 @rpc("any_peer", "call_local")
 func die(killer_id: int):
 	killed.emit(str(name).to_int(), killer_id)
-	
-	var dropped_pistol = PISTOL_SCENE.instantiate()
-	dropped_pistol.position = pistol.global_position
-	dropped_pistol.rotation = pistol.global_rotation
-	dropped_pistol.linear_velocity = velocity
-	add_sibling(dropped_pistol)
+	pistol.instantiate_dropped_version(get_parent(), get_real_velocity() * 10)
 
 
 @rpc("any_peer", "call_local")
