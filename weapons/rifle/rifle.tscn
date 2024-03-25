@@ -164,9 +164,9 @@ transform = Transform3D(0.663004, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0
 [node name="FireSound" type="AudioStreamPlayer3D" parent="." index="1"]
 transform = Transform3D(0.666667, 0, 0, 0, 0.666667, 0, 0, 0, 0.666667, 0, 0.0418102, -0.298707)
 stream = SubResource("AudioStreamRandomizer_1rcic")
-volume_db = 20.0
-unit_size = 240.0
-max_db = 6.0
+volume_db = 10.0
+unit_size = 13.0
+max_db = 5.0
 max_polyphony = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]

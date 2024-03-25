@@ -163,8 +163,8 @@ muzzle_flash = NodePath("MuzzleFlash")
 [node name="FireSound" type="AudioStreamPlayer3D" parent="." index="1"]
 transform = Transform3D(0.588235, 0, 0, 0, 0.588235, 0, 0, 0, 0.588235, 0, 0.0741954, -0.107023)
 stream = SubResource("AudioStreamRandomizer_8yjhy")
-volume_db = -40.0
-unit_size = 180.0
+volume_db = -20.0
+unit_size = 130.0
 
 [node name="MuzzleFlash" type="GPUParticles3D" parent="." index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0722219, -0.25197)
