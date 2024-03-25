@@ -65,6 +65,7 @@ func add_player(peer_id):
 		var existing_instance = existing_player.instance
 		existing_instance.set_color.rpc_id(peer_id, existing_player.color)
 		existing_instance.set_player_name.rpc_id(peer_id, existing_player.player_name)
+		existing_instance.equip_weapon.rpc_id(peer_id, existing_instance.current_weapon_index)
 		scoreboard.add_player.rpc_id(peer_id, existing_player_id, existing_player.player_name)
 		scoreboard.update_player_kda.rpc_id(peer_id, existing_player_id, existing_player.kills, existing_player.deaths)
 	

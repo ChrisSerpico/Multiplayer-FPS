@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://eiursmsmewhg"]
+[gd_scene load_steps=18 format=3 uid="uid://eiursmsmewhg"]
 
 [ext_resource type="PackedScene" uid="uid://6q2056c0vcxk" path="res://weapons/pistol/pistol.blend" id="1_6i7dt"]
 [ext_resource type="Script" path="res://weapons/weapon.gd" id="2_0vyym"]
 [ext_resource type="AudioStream" uid="uid://drum4m5n4rtme" path="res://weapons/pistol/pistol_shot.wav" id="2_ll78o"]
 [ext_resource type="PackedScene" uid="uid://b8nnbt520ectw" path="res://weapons/pistol/pistol_obj.tscn" id="3_27gpi"]
+[ext_resource type="Texture2D" uid="uid://obpwonshyrdh" path="res://addons/kenney_particle_pack/star_06.png" id="5_m2edj"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8yjhy"]
 random_pitch = 1.1
@@ -11,16 +12,177 @@ streams_count = 1
 stream_0/stream = ExtResource("2_ll78o")
 stream_0/weight = 1.0
 
-[node name="Pistol" node_paths=PackedStringArray("fire_sound") instance=ExtResource("1_6i7dt")]
-transform = Transform3D(1.7, 0, 0, 0, 1.7, 0, 0, 0, 1.7, 0, 0, 0)
+[sub_resource type="Gradient" id="Gradient_p2of7"]
+offsets = PackedFloat32Array(0, 0.160194, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_of5xl"]
+gradient = SubResource("Gradient_p2of7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qjdvy"]
+angle_min = 45.0
+angle_max = 45.0
+gravity = Vector3(0, 0, 0)
+color_ramp = SubResource("GradientTexture1D_of5xl")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_paslq"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.997198, 1, 0.776148, 1)
+albedo_texture = ExtResource("5_m2edj")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_301bl"]
+material = SubResource("StandardMaterial3D_paslq")
+size = Vector2(0.5, 0.5)
+orientation = 2
+
+[sub_resource type="Animation" id="Animation_qhgy6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.5, -0.25, -0.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_yyhii"]
+resource_name = "idle"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector3(0.5, -0.25, -0.5), Vector3(0.5, -0.279865, -0.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.0610865, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_l7jjo"]
+resource_name = "move"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(0.5, 2, 0.5, 2),
+"update": 0,
+"values": [Vector3(0.5, -0.25, -0.5), Vector3(0.44006, -0.201756, -0.5), Vector3(0.5, -0.25, -0.5), Vector3(0.533581, -0.203587, -0.5)]
+}
+
+[sub_resource type="Animation" id="Animation_ikwl2"]
+resource_name = "shoot"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector3(0.5, -0.207469, -0.5), Vector3(0.5, -0.25, -0.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector3(0.54381, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s5bu6"]
+_data = {
+"RESET": SubResource("Animation_qhgy6"),
+"idle": SubResource("Animation_yyhii"),
+"move": SubResource("Animation_l7jjo"),
+"shoot": SubResource("Animation_ikwl2")
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_40vgs"]
+
+[node name="Pistol" node_paths=PackedStringArray("fire_sound", "muzzle_flash") instance=ExtResource("1_6i7dt")]
+transform = Transform3D(1.7, 0, 0, 0, 1.7, 0, 0, 0, 1.7, 0.5, -0.25, -0.5)
 script = ExtResource("2_0vyym")
+damage = 1
 dropped_version_scene = ExtResource("3_27gpi")
 fire_sound = NodePath("FireSound")
+muzzle_flash = NodePath("MuzzleFlash")
 
 [node name="FireSound" type="AudioStreamPlayer3D" parent="." index="1"]
-transform = Transform3D(0.588235, 0, 0, 0, 0.588235, 0, 0, 0, 0.588235, 0, 0.0741954, -0.217624)
+transform = Transform3D(0.588235, 0, 0, 0, 0.588235, 0, 0, 0, 0.588235, 0, 0.0741954, -0.107023)
 stream = SubResource("AudioStreamRandomizer_8yjhy")
 volume_db = -40.0
 unit_size = 180.0
 
+[node name="MuzzleFlash" type="GPUParticles3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0722219, -0.25197)
+emitting = false
+amount = 1
+lifetime = 0.25
+one_shot = true
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_qjdvy")
+draw_pass_1 = SubResource("PlaneMesh_301bl")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
+libraries = {
+"": SubResource("AnimationLibrary_s5bu6"),
+"pistol_animations": SubResource("AnimationLibrary_40vgs")
+}
+autoplay = "idle"
+playback_default_blend_time = 0.05
+
 [connection signal="finished" from="FireSound" to="." method="_on_fire_sound_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
