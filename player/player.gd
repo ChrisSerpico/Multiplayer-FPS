@@ -18,7 +18,8 @@ signal killed(player_id: int, killed_by_id: int)
 @export var spawn_weapon_scenes: Array[PackedScene]
 var current_weapon_index: int
 
-var health = 3
+@export var max_health = 3
+var health = max_health
 
 const SPEED = 10.0
 const JUMP_VELOCITY = 9.0
@@ -109,10 +110,21 @@ func receive_damage(damager_id: int, amount: int):
 	if health <= 0:
 		die.rpc(damager_id)
 		
-		health = 3
+		health = max_health
 		position = Vector3.ZERO
 	
 	health_changed.emit(health)
+
+
+func heal_damage(amount: int) -> bool:
+	if health >= max_health:
+		return false
+	
+	health += amount
+	health = clampi(health, 0, max_health)
+	
+	health_changed.emit(health)
+	return true
 
 
 @rpc("any_peer", "call_local")

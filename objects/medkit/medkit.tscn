@@ -1,6 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bb608ei01dk4o"]
+[gd_scene load_steps=9 format=3 uid="uid://bb608ei01dk4o"]
 
 [ext_resource type="PackedScene" uid="uid://c8a2lbjxhnu0v" path="res://objects/medkit/medkit.blend" id="1_kjme6"]
+[ext_resource type="Script" path="res://objects/medkit/medkit.gd" id="2_ai5il"]
+[ext_resource type="AudioStream" uid="uid://divwl2kym1r51" path="res://objects/medkit/GUNMech_Mechanical_12.wav" id="3_m6c8v"]
 
 [sub_resource type="Animation" id="Animation_gc5e1"]
 length = 0.001
@@ -67,7 +69,16 @@ _data = {
 [sub_resource type="SphereShape3D" id="SphereShape3D_e7m27"]
 radius = 1.0
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_cxplk"]
+properties/0/path = NodePath(".:visible")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath("Area3D:monitoring")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+
 [node name="Medkit" instance=ExtResource("1_kjme6")]
+script = ExtResource("2_ai5il")
 
 [node name="Cube" parent="." index="0"]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
@@ -79,6 +90,20 @@ libraries = {
 autoplay = "float"
 
 [node name="Area3D" type="Area3D" parent="." index="2"]
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
 shape = SubResource("SphereShape3D_e7m27")
+
+[node name="PickupSound" type="AudioStreamPlayer" parent="." index="3"]
+stream = ExtResource("3_m6c8v")
+
+[node name="RespawnTimer" type="Timer" parent="." index="4"]
+wait_time = 5.0
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="5"]
+replication_config = SubResource("SceneReplicationConfig_cxplk")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="timeout" from="RespawnTimer" to="." method="respawn"]
