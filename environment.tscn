@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://yhhdmpnnwnxr"]
+[gd_scene load_steps=8 format=3 uid="uid://yhhdmpnnwnxr"]
 
 [ext_resource type="PackedScene" uid="uid://bwti7s30b3vpu" path="res://scene.blend" id="1_jaujk"]
 [ext_resource type="Texture2D" uid="uid://clnl6tl7hj4rq" path="res://addons/kenney_prototype_textures/dark/texture_09.png" id="2_pnsn1"]
 [ext_resource type="Texture2D" uid="uid://ctqdv4ep1a7cl" path="res://addons/kenney_prototype_textures/orange/texture_08.png" id="3_7sssn"]
 [ext_resource type="AudioStream" uid="uid://c6oypd0djxrfo" path="res://wind_at_night_3.wav" id="4_pm1rj"]
+[ext_resource type="PackedScene" uid="uid://bb608ei01dk4o" path="res://objects/medkit/medkit.tscn" id="5_s3pw7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_awell"]
 albedo_texture = ExtResource("2_pnsn1")
@@ -23,3 +24,15 @@ surface_material_override/1 = SubResource("StandardMaterial3D_nrtrp")
 stream = ExtResource("4_pm1rj")
 volume_db = -17.0
 autoplay = true
+
+[node name="Medkit" parent="." index="2" instance=ExtResource("5_s3pw7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 4.5, -5)
+
+[node name="Medkit2" parent="." index="3" instance=ExtResource("5_s3pw7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 4.5, 5)
+
+[node name="Medkit3" parent="." index="4" instance=ExtResource("5_s3pw7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 4.5, 5)
+
+[node name="Medkit4" parent="." index="5" instance=ExtResource("5_s3pw7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 4.5, -5)
