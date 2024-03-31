@@ -124,6 +124,14 @@ prefix = "Join Port:"
 layout_mode = 2
 text = "Join"
 
+[node name="HSeparator4" type="HSeparator" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="QuitButton" type="Button" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"RedButton"
+text = "Exit"
+
 [node name="HUD" type="Control" parent="CanvasLayer"]
 visible = false
 layout_mode = 3
@@ -185,4 +193,6 @@ spawn_path = NodePath("..")
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="disconnect_pressed" from="CanvasLayer/PauseMenu" to="." method="_on_pause_menu_disconnect_pressed"]
 [connection signal="spawned" from="MultiplayerSpawner" to="." method="_on_multiplayer_spawner_spawned"]

@@ -1,6 +1,9 @@
 extends Control
 
 
+signal disconnect_pressed
+
+
 @onready var volume_slider = $PanelContainer/MarginContainer/VBoxContainer/VolumeSlider
 @onready var audio_bus_index = AudioServer.get_bus_index("Master")
 
@@ -22,3 +25,7 @@ func _unhandled_input(event):
 		else:
 			show()
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+
+func _on_disconnect_button_pressed():
+	disconnect_pressed.emit()

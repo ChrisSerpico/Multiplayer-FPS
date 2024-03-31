@@ -125,3 +125,11 @@ func _on_player_killed(killed_id: int, killer_id: int):
 	
 	scoreboard.update_player_kda.rpc(killed_id, killed.kills, killed.deaths)
 	scoreboard.update_player_kda.rpc(killer_id, killer.kills, killer.deaths)
+
+
+func _on_quit_button_pressed():
+	get_tree().quit()
+
+
+func _on_pause_menu_disconnect_pressed():
+	get_tree().quit()

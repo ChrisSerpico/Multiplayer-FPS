@@ -63,6 +63,8 @@ layout_mode = 2
 
 [node name="DisconnectButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_type_variation = &"RedButton"
 text = "Disconnect"
 
 [connection signal="value_changed" from="PanelContainer/MarginContainer/VBoxContainer/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/DisconnectButton" to="." method="_on_disconnect_button_pressed"]
