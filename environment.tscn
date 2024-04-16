@@ -20,6 +20,9 @@ uv1_triplanar = true
 surface_material_override/0 = SubResource("StandardMaterial3D_awell")
 surface_material_override/1 = SubResource("StandardMaterial3D_nrtrp")
 
+[node name="StaticBody3D" parent="Plane" index="0"]
+collision_priority = 10.0
+
 [node name="AmbientSound" type="AudioStreamPlayer" parent="." index="1"]
 stream = ExtResource("4_pm1rj")
 volume_db = -17.0
